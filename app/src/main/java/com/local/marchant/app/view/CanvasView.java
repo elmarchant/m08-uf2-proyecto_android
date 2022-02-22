@@ -19,6 +19,8 @@ public class CanvasView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        //prueba de git
+
         float width = getWidth() / 2;
         float height = getHeight() / 2;
 
