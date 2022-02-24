@@ -76,26 +76,6 @@ public class PlayFragment extends Fragment {
 
         getActivity().setTitle("Simon Game | Play");
 
-        View canvasV = (CanvasView) root.findViewById(R.id.canvas);
-
-        canvasV.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                float x = event.getX(), y = event.getY();
-                int X = (int) x / (canvasV.getWidth() / 2), Y = (int) y / (canvasV.getHeight() / 2);
-                String color = "";
-
-                if(X == 0 && Y == 0) color = "GREEN";
-                else if(X == 1 && Y == 0) color = "RED";
-                else if(X == 0 && Y == 1) color = "YELLOW";
-                else if(X == 1 && Y == 1) color = "BLUE";
-
-                Log.i("TAG", "Touched color: " + color);
-
-                return false;
-            }
-        });
-
         return root;
     }
 }
