@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.local.marchant.app.R;
@@ -36,8 +37,11 @@ public class PlayFragment extends Fragment {
     private Canvas canvas;
     private RelativeLayout screen;
     private Paint paint;
+    private Button btn_soundtrack;
+    private int posicion = 0;
 
     // Mediaplay audio de botones
+    private MediaPlayer soundtrack;
     private MediaPlayer song_green;
     private MediaPlayer song_blue;
     private MediaPlayer song_yellow;
@@ -84,12 +88,28 @@ public class PlayFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_play, container, false);
 
         getActivity().setTitle("Simon Game | Play");
+        btn_soundtrack = (Button) root.findViewById(R.id.btn_soundtrack);
       
         View canvasV = (CanvasView) root.findViewById(R.id.canvas);
+        soundtrack = MediaPlayer.create(getContext(),R.raw.soudtrack);
         song_green = MediaPlayer.create(getContext(), R.raw.b3);
         song_blue = MediaPlayer.create(getContext(), R.raw.e2);
         song_yellow = MediaPlayer.create(getContext(), R.raw.d3);
         song_red = MediaPlayer.create(getContext(), R.raw.g3);
+        soundtrack.start();
+
+        btn_soundtrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (soundtrack != null && soundtrack.isPlaying()){
+                    posicion = soundtrack.getCurrentPosition();
+                    soundtrack.pause();
+                }else if(soundtrack != null && soundtrack.isPlaying() == false) {
+                    soundtrack.seekTo(posicion);
+                    soundtrack.start();
+                }
+            }
+        });
 
         canvasV.setOnTouchListener(new View.OnTouchListener() {
             @Override
