@@ -3,6 +3,7 @@ package com.local.marchant.app.ui;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -35,6 +36,14 @@ public class PlayFragment extends Fragment {
     private Canvas canvas;
     private RelativeLayout screen;
     private Paint paint;
+
+    // Mediaplay audio de botones
+    private MediaPlayer song_green;
+    private MediaPlayer song_blue;
+    private MediaPlayer song_yellow;
+    private MediaPlayer song_red;
+
+
 
     public PlayFragment() {
         // Required empty public constructor
@@ -75,7 +84,42 @@ public class PlayFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_play, container, false);
 
         getActivity().setTitle("Simon Game | Play");
+      
+        View canvasV = (CanvasView) root.findViewById(R.id.canvas);
+        song_green = MediaPlayer.create(getContext(), R.raw.b3);
+        song_blue = MediaPlayer.create(getContext(), R.raw.e2);
+        song_yellow = MediaPlayer.create(getContext(), R.raw.d3);
+        song_red = MediaPlayer.create(getContext(), R.raw.g3);
 
+        canvasV.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                float x = event.getX(), y = event.getY();
+                int X = (int) x / (canvasV.getWidth() / 2), Y = (int) y / (canvasV.getHeight() / 2);
+                String color = "";
+
+                if(X == 0 && Y == 0) {
+                    song_green.start();
+                    color = "GREEN";
+                }
+                else if(X == 1 && Y == 0){
+                    song_red.start();
+                    color = "RED";
+                }
+                else if(X == 0 && Y == 1){
+                    song_yellow.start();
+                    color = "YELLOW";
+                }
+                else if(X == 1 && Y == 1){
+                    song_blue.start();
+                    color = "BLUE";
+                }
+
+                Log.i("TAG", "Touched color: " + color);
+
+                return false;
+            }
+        });
         return root;
     }
 }
