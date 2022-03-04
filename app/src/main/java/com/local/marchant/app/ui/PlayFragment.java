@@ -84,7 +84,7 @@ public class PlayFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_play, container, false);
 
         getActivity().setTitle("Simon Game | Play");
-
+      
         View canvasV = (CanvasView) root.findViewById(R.id.canvas);
         song_green = MediaPlayer.create(getContext(), R.raw.b3);
         song_blue = MediaPlayer.create(getContext(), R.raw.e2);
@@ -120,7 +120,6 @@ public class PlayFragment extends Fragment {
                 return false;
             }
         });
-
         return root;
     }
 }
