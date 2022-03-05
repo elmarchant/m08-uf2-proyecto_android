@@ -20,6 +20,16 @@ public class CanvasView extends View {
             new SimonButton(Color.BLUE, Color.BLACK)
     };
 
+    public boolean isPlaying() {
+        return playing;
+    }
+
+    public void setPlaying(boolean playing) {
+        this.playing = playing;
+    }
+
+    private boolean playing = false;
+
     public CanvasView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
@@ -36,7 +46,6 @@ public class CanvasView extends View {
         buttons[2].setRect(height, 0, getHeight(), width);
         buttons[3].setRect(height, width, getHeight(), getWidth());
 
-
         Paint paint = new Paint();
 
         for(SimonButton button : buttons){
@@ -45,45 +54,5 @@ public class CanvasView extends View {
 
             canvas.drawRect(button.getLeft(), button.getTop(), button.getRight(), button.getBottom(), paint);
         }
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-
-        if(event.getActionMasked() == MotionEvent.ACTION_UP){
-
-            for(int i = 0; i < 4; i++){
-                if(buttons[i].isActive()) buttons[i].setActive(false);
-            }
-
-            Log.i("Action", "Touch up");
-        }else if(event.getAction() == MotionEvent.ACTION_DOWN){
-            float x = event.getX(), y = event.getY();
-            int X = (int) x / (getWidth() / 2), Y = (int) y / (getHeight() / 2);
-            int index = 0;
-            String color = "";
-
-            if(X == 0 && Y == 0){
-                color = "GREEN";
-                index = 0;
-            }else if(X == 1 && Y == 0){
-                color = "RED";
-                index = 1;
-            } else if(X == 0 && Y == 1) {
-                color = "YELLOW";
-                index = 2;
-            } else if(X == 1 && Y == 1) {
-                color = "BLUE";
-                index = 3;
-            }
-
-            buttons[index].setActive(true);
-
-            Log.i("TAG", "Touched color: " + color);
-            Log.i("Action", "Touch down");
-        }
-
-        invalidate();
-        return true;
     }
 }
