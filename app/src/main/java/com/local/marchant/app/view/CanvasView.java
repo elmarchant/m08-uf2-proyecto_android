@@ -11,13 +11,15 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 
+import com.local.marchant.app.R;
+
 public class CanvasView extends View {
 
     public SimonButton[] buttons = {
-            new SimonButton(Color.GREEN, Color.BLACK),
-            new SimonButton(Color.RED, Color.BLACK),
-            new SimonButton(Color.YELLOW, Color.BLACK),
-            new SimonButton(Color.BLUE, Color.BLACK)
+            new SimonButton(Color.GREEN, Color.BLACK, getContext(), R.raw.b3),
+            new SimonButton(Color.RED, Color.BLACK, getContext(), R.raw.g3),
+            new SimonButton(Color.YELLOW, Color.BLACK, getContext(), R.raw.d3),
+            new SimonButton(Color.BLUE, Color.BLACK, getContext(), R.raw.e2)
     };
 
     public boolean isPlaying() {

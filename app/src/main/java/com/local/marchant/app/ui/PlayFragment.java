@@ -115,10 +115,6 @@ public class PlayFragment extends Fragment {
                     if(game.userTurn()){
                         if(event.getActionMasked() == MotionEvent.ACTION_UP){
 
-                            /*for(int i = 0; i < 4; i++){
-                                if(cview.buttons[i].isActive()) cview.buttons[i].setActive(false);
-                            }*/
-
                             cview.buttons[index].setActive(false);
 
                             boolean result = game.userAttempt(index);
@@ -135,21 +131,26 @@ public class PlayFragment extends Fragment {
                             String color = "";
 
                             if(X == 0 && Y == 0){
-                                song_green.start();
                                 color = "GREEN";
                                 index = 0;
                             }else if(X == 1 && Y == 0){
-                                song_red.start();
                                 color = "RED";
                                 index = 1;
                             } else if(X == 0 && Y == 1) {
-                                song_yellow.start();
                                 color = "YELLOW";
                                 index = 2;
                             } else if(X == 1 && Y == 1) {
-                                song_blue.start();
                                 color = "BLUE";
                                 index = 3;
+                            }
+
+                            for (int i = 0; i < cview.buttons.length; i++){
+                                if(i != index){
+                                    if(cview.buttons[i].getAudio().isPlaying()){
+                                        cview.buttons[i].getAudio().pause();
+                                        cview.buttons[i].getAudio().seekTo(0);
+                                    }
+                                }
                             }
 
                             cview.buttons[index].setActive(true);

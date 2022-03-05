@@ -30,6 +30,15 @@ public class SimonGame {
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    for (int i = 0; i < canvasView.buttons.length; i++) {
+                        if(i != index){
+                            if(canvasView.buttons[i].getAudio().isPlaying()){
+                                canvasView.buttons[i].getAudio().pause();
+                                canvasView.buttons[i].getAudio().seekTo(0);
+                            }
+                        }
+                    }
+
                     canvasView.buttons[index].setActive(true);
                     Log.i("Game", "Activating button");
                     canvasView.invalidate();
