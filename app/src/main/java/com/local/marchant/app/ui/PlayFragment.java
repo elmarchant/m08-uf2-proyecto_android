@@ -3,6 +3,7 @@ package com.local.marchant.app.ui;
 import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -35,11 +36,21 @@ public class PlayFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Canvas canvas;
+    private RelativeLayout screen;
+    private Paint paint;
     private Button nav_exit, start_game;
     private SimonGame game;
     private CanvasView cview;
     private boolean clicking = false;
     private int index = 0;
+
+    // Mediaplay audio de botones
+    private MediaPlayer song_green;
+    private MediaPlayer song_blue;
+    private MediaPlayer song_yellow;
+    private MediaPlayer song_red;
+
 
     public PlayFragment() {
         // Required empty public constructor
@@ -92,6 +103,11 @@ public class PlayFragment extends Fragment {
             }
         });
 
+        song_green = MediaPlayer.create(getContext(), R.raw.b3);
+        song_blue = MediaPlayer.create(getContext(), R.raw.e2);
+        song_yellow = MediaPlayer.create(getContext(), R.raw.d3);
+        song_red = MediaPlayer.create(getContext(), R.raw.g3);
+
         cview.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -119,15 +135,19 @@ public class PlayFragment extends Fragment {
                             String color = "";
 
                             if(X == 0 && Y == 0){
+                                song_green.start();
                                 color = "GREEN";
                                 index = 0;
                             }else if(X == 1 && Y == 0){
+                                song_red.start();
                                 color = "RED";
                                 index = 1;
                             } else if(X == 0 && Y == 1) {
+                                song_yellow.start();
                                 color = "YELLOW";
                                 index = 2;
                             } else if(X == 1 && Y == 1) {
+                                song_blue.start();
                                 color = "BLUE";
                                 index = 3;
                             }
