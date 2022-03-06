@@ -104,11 +104,13 @@ public class PlayFragment extends Fragment {
         nav_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                soundtrack.stop();
                 Navigation.findNavController(root).navigate(R.id.fromPlayToStart);
             }
         });
 
         soundtrack = MediaPlayer.create(getContext(),R.raw.soudtrack);
+        soundtrack.setLooping(true);
         soundtrack.start();
 
         btn_soundtrack.setOnClickListener(new View.OnClickListener() {
