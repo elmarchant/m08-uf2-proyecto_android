@@ -9,8 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.local.marchant.app.R;
+import com.local.marchant.app.firebase.DAOPlayer;
+import com.local.marchant.app.firebase.Player;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,6 +32,7 @@ public class StartFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private Button nav_play;
+    private EditText edittext_pn;
 
     public StartFragment() {
         // Required empty public constructor
@@ -69,10 +74,18 @@ public class StartFragment extends Fragment {
         getActivity().setTitle("Simon Game | Start");
 
         nav_play = (Button) root.findViewById(R.id.nav_play);
+        edittext_pn = (EditText) root.findViewById(R.id.editTextTextPlayerName);
+        DAOPlayer daoP = new DAOPlayer();
 
         nav_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Player p = new Player(edittext_pn.getText().toString(),0);
+                daoP.add(p).addOnSuccessListener(suc->{
+                    Toast.makeText(getContext(),"Juagdor insertado con exito",Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(er->{
+                    Toast.makeText(getContext(),""+er.getMessage(),Toast.LENGTH_SHORT).show();
+                });
                 Navigation.findNavController(root).navigate(R.id.fromStartToPlay);
             }
         });
