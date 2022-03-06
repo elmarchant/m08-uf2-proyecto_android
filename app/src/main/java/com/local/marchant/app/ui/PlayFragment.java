@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.local.marchant.app.R;
 import com.local.marchant.app.view.CanvasView;
@@ -46,14 +47,8 @@ public class PlayFragment extends Fragment {
     private int index = 0;
     private Button btn_soundtrack;
     private int posicion = 0;
-
-    // Mediaplay audio de botones
-    private MediaPlayer song_green;
-    private MediaPlayer song_blue;
-    private MediaPlayer song_yellow;
-    private MediaPlayer song_red;
     private MediaPlayer soundtrack;
-
+    private TextView maxScore, score;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -100,6 +95,12 @@ public class PlayFragment extends Fragment {
         start_game = (Button) root.findViewById(R.id.start_game);
         cview = (CanvasView) root.findViewById(R.id.canvas);
 
+        score = (TextView) root.findViewById(R.id.score);
+        maxScore = (TextView) root.findViewById(R.id.max_score);
+
+        score.setText("0");
+        maxScore.setText("0");
+
         nav_exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,11 +109,6 @@ public class PlayFragment extends Fragment {
         });
 
         soundtrack = MediaPlayer.create(getContext(),R.raw.soudtrack);
-        song_green = MediaPlayer.create(getContext(), R.raw.b3);
-        song_blue = MediaPlayer.create(getContext(), R.raw.e2);
-        song_yellow = MediaPlayer.create(getContext(), R.raw.d3);
-        song_red = MediaPlayer.create(getContext(), R.raw.g3);
-
         soundtrack.start();
 
         btn_soundtrack.setOnClickListener(new View.OnClickListener() {
@@ -138,6 +134,9 @@ public class PlayFragment extends Fragment {
                             cview.buttons[index].setActive(false);
 
                             boolean result = game.userAttempt(index);
+
+                            score.setText(String.valueOf(game.getScore()));
+                            maxScore.setText(String.valueOf(game.getMaxScore()));
 
                             if(!result || game.isTail()){
                                 game.setTurn(false);

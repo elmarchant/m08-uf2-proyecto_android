@@ -16,10 +16,10 @@ import com.local.marchant.app.R;
 public class CanvasView extends View {
 
     public SimonButton[] buttons = {
-            new SimonButton(Color.GREEN, Color.BLACK, getContext(), R.raw.b3),
-            new SimonButton(Color.RED, Color.BLACK, getContext(), R.raw.g3),
-            new SimonButton(Color.YELLOW, Color.BLACK, getContext(), R.raw.d3),
-            new SimonButton(Color.BLUE, Color.BLACK, getContext(), R.raw.e2)
+            new SimonButton(0xFF005E00, Color.GREEN, getContext(), R.raw.b3),
+            new SimonButton(0xFF690000, Color.RED, getContext(), R.raw.g3),
+            new SimonButton(0xFF6E6E00, Color.YELLOW, getContext(), R.raw.d3),
+            new SimonButton(0xFF000061, Color.BLUE, getContext(), R.raw.e2)
     };
 
     public boolean isPlaying() {
