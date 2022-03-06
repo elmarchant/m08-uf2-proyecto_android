@@ -31,7 +31,7 @@ public class StartFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Button nav_play;
+    private Button nav_play, nav_scores;
     private EditText edittext_pn;
 
     public StartFragment() {
@@ -75,18 +75,33 @@ public class StartFragment extends Fragment {
 
         nav_play = (Button) root.findViewById(R.id.nav_play);
         edittext_pn = (EditText) root.findViewById(R.id.editTextTextPlayerName);
+        nav_scores = (Button) root.findViewById(R.id.nav_scores);
         DAOPlayer daoP = new DAOPlayer();
 
         nav_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Player p = new Player(edittext_pn.getText().toString(),0);
-                daoP.add(p).addOnSuccessListener(suc->{
-                    Toast.makeText(getContext(),"Juagdor insertado con exito",Toast.LENGTH_SHORT).show();
-                }).addOnFailureListener(er->{
-                    Toast.makeText(getContext(),""+er.getMessage(),Toast.LENGTH_SHORT).show();
-                });
-                Navigation.findNavController(root).navigate(R.id.fromStartToPlay);
+                String username = edittext_pn.getText().toString().trim();
+
+                if(!username.equals("") && !username.contains(" ")){
+                    Player p = new Player(username,0);
+                    daoP.add(p).addOnSuccessListener(suc->{
+                        Toast.makeText(getContext(),"Jugador insertado con éxito",Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(er->{
+                        Toast.makeText(getContext(),""+er.getMessage(),Toast.LENGTH_SHORT).show();
+                    });
+
+                    Navigation.findNavController(root).navigate(R.id.fromStartToPlay);
+                }else{
+                    Toast.makeText(getContext(),"Nombre de usuario no válido",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        nav_scores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(root).navigate(R.id.fromStartToScores);
             }
         });
 

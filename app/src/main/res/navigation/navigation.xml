@@ -13,6 +13,9 @@
         <action
             android:id="@+id/fromStartToPlay"
             app:destination="@id/playFragment" />
+        <action
+            android:id="@+id/fromStartToScores"
+            app:destination="@id/fromHighScoresToStart" />
     </fragment>
     <fragment
         android:id="@+id/playFragment"
@@ -21,6 +24,15 @@
         tools:layout="@layout/fragment_play" >
         <action
             android:id="@+id/fromPlayToStart"
+            app:destination="@id/startFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fromHighScoresToStart"
+        android:name="com.local.marchant.app.ui.MaxScoresFragment"
+        android:label="fragment_max_scores"
+        tools:layout="@layout/fragment_max_scores" >
+        <action
+            android:id="@+id/fromScoresToStart"
             app:destination="@id/startFragment" />
     </fragment>
 </navigation>
