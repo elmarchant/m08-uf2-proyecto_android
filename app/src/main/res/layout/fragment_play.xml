@@ -44,4 +44,14 @@
             style="?android:attr/buttonBarButtonStyle" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/btn_soundtrack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="41dp"
+        android:layout_marginTop="16dp"
+        android:text="Soundtrack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

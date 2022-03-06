@@ -44,12 +44,15 @@ public class PlayFragment extends Fragment {
     private CanvasView cview;
     private boolean clicking = false;
     private int index = 0;
+    private Button btn_soundtrack;
+    private int posicion = 0;
 
     // Mediaplay audio de botones
     private MediaPlayer song_green;
     private MediaPlayer song_blue;
     private MediaPlayer song_yellow;
     private MediaPlayer song_red;
+    private MediaPlayer soundtrack;
 
 
     public PlayFragment() {
@@ -92,6 +95,7 @@ public class PlayFragment extends Fragment {
 
         getActivity().setTitle("Simon Game | Play");
 
+        btn_soundtrack = (Button) root.findViewById(R.id.btn_soundtrack);
         nav_exit = (Button) root.findViewById(R.id.nav_exit);
         start_game = (Button) root.findViewById(R.id.start_game);
         cview = (CanvasView) root.findViewById(R.id.canvas);
@@ -103,10 +107,26 @@ public class PlayFragment extends Fragment {
             }
         });
 
+        soundtrack = MediaPlayer.create(getContext(),R.raw.soudtrack);
         song_green = MediaPlayer.create(getContext(), R.raw.b3);
         song_blue = MediaPlayer.create(getContext(), R.raw.e2);
         song_yellow = MediaPlayer.create(getContext(), R.raw.d3);
         song_red = MediaPlayer.create(getContext(), R.raw.g3);
+
+        soundtrack.start();
+
+        btn_soundtrack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (soundtrack != null && soundtrack.isPlaying()){
+                    posicion = soundtrack.getCurrentPosition();
+                    soundtrack.pause();
+                }else if(soundtrack != null && soundtrack.isPlaying() == false) {
+                    soundtrack.seekTo(posicion);
+                    soundtrack.start();
+                }
+            }
+        });
 
         cview.setOnTouchListener(new View.OnTouchListener() {
             @Override

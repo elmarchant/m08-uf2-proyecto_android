@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "612288342667",
+    "project_id": "appsimongame",
+    "storage_bucket": "appsimongame.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:612288342667:android:f7e30e70b0c1d64608028e",
+        "android_client_info": {
+          "package_name": "com.local.marchant.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "612288342667-3afvjl786qqput07jjdugu60lc398hd2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMpouPGnoNr60QCXu5qZgBTdMhtWB-4qU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "612288342667-3afvjl786qqput07jjdugu60lc398hd2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
