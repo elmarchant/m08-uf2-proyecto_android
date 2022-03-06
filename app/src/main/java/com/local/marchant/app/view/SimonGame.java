@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class SimonGame {
     private CanvasView canvasView;
-    private int level = 1, score = 0, userIndex = 0;
+    private int level = 1, maxScore = 0, score = 0, userIndex = 0;
     private ArrayList<Integer> repeats = new ArrayList<Integer>();
     private String username;
     private boolean status = true;
@@ -75,9 +75,13 @@ public class SimonGame {
     public boolean userAttempt(int number){
         if(number == repeats.get(userIndex)){
             userIndex++;
+            score++;
+
+            if(score > maxScore) maxScore = score;
             return true;
         }else{
             repeats.clear();
+            score = 0;
             return false;
         }
     }
@@ -90,6 +94,22 @@ public class SimonGame {
 
     public boolean getStatus() {
         return status;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public void end() {

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.local.marchant.app.R;
 import com.local.marchant.app.view.CanvasView;
@@ -44,6 +45,7 @@ public class PlayFragment extends Fragment {
     private CanvasView cview;
     private boolean clicking = false;
     private int index = 0;
+    private TextView maxScore, score;
 
     // Mediaplay audio de botones
     private MediaPlayer song_green;
@@ -95,6 +97,11 @@ public class PlayFragment extends Fragment {
         nav_exit = (Button) root.findViewById(R.id.nav_exit);
         start_game = (Button) root.findViewById(R.id.start_game);
         cview = (CanvasView) root.findViewById(R.id.canvas);
+        score = (TextView) root.findViewById(R.id.score);
+        maxScore = (TextView) root.findViewById(R.id.max_score);
+
+        score.setText("0");
+        maxScore.setText("0");
 
         nav_exit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,10 +110,10 @@ public class PlayFragment extends Fragment {
             }
         });
 
-        song_green = MediaPlayer.create(getContext(), R.raw.b3);
+        /*song_green = MediaPlayer.create(getContext(), R.raw.b3);
         song_blue = MediaPlayer.create(getContext(), R.raw.e2);
         song_yellow = MediaPlayer.create(getContext(), R.raw.d3);
-        song_red = MediaPlayer.create(getContext(), R.raw.g3);
+        song_red = MediaPlayer.create(getContext(), R.raw.g3);*/
 
         cview.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -118,6 +125,9 @@ public class PlayFragment extends Fragment {
                             cview.buttons[index].setActive(false);
 
                             boolean result = game.userAttempt(index);
+
+                            score.setText(String.valueOf(game.getScore()));
+                            maxScore.setText(String.valueOf(game.getMaxScore()));
 
                             if(!result || game.isTail()){
                                 game.setTurn(false);
