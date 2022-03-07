@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
@@ -17,7 +18,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.local.marchant.app.MainActivity;
 import com.local.marchant.app.R;
 import com.local.marchant.app.view.CanvasView;
 import com.local.marchant.app.view.SimonGame;
@@ -49,6 +57,7 @@ public class PlayFragment extends Fragment {
     private int posicion = 0;
     private MediaPlayer soundtrack;
     private TextView maxScore, score;
+    private MainActivity activity;
 
     public PlayFragment() {
         // Required empty public constructor
@@ -90,10 +99,13 @@ public class PlayFragment extends Fragment {
 
         getActivity().setTitle("Simon Game | Play");
 
+        activity = (MainActivity) getActivity();
         btn_soundtrack = (Button) root.findViewById(R.id.btn_soundtrack);
         nav_exit = (Button) root.findViewById(R.id.nav_exit);
         start_game = (Button) root.findViewById(R.id.start_game);
         cview = (CanvasView) root.findViewById(R.id.canvas);
+
+        Toast.makeText(getContext(), "Nombre de usuario: " + activity.getUsername(), Toast.LENGTH_LONG).show();
 
         score = (TextView) root.findViewById(R.id.score);
         maxScore = (TextView) root.findViewById(R.id.max_score);
@@ -188,12 +200,36 @@ public class PlayFragment extends Fragment {
             }
         });
 
+        DatabaseReference dr = FirebaseDatabase.getInstance().getReference();
+
+        dr.child("Player").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    DataSnapshot player;
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        player = snapshot.child(child.getKey());
+
+                        if(player.child("user_name").getValue().toString().equals(activity.getUsername())){
+                            maxScore.setText(player.child("maxscore").getValue().toString());
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         start_game.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 CanvasView canvasView = (CanvasView) root.findViewById(R.id.canvas);
 
-                game = new SimonGame(cview, "user");
+                game = new SimonGame(cview, activity.getUsername());
                 game.play();
                 cview.setPlaying(true);
                 start_game.setText("Reset");

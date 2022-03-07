@@ -82,6 +82,8 @@ public class MaxScoresFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_max_scores, container, false);
 
+        getActivity().setTitle("Simon Game | Highest Scores");
+
         nav_start = (Button) root.findViewById(R.id.nav_go_back);
         dataLayout = (LinearLayout) root.findViewById(R.id.dataLayout);
         Tname = (TextView) root.findViewById(R.id.hs_name);
@@ -96,6 +98,7 @@ public class MaxScoresFragment extends Fragment {
                     LinearLayout row, parent;
                     TextView name, score;
 
+                    dataLayout.removeAllViews();
                     for(DataSnapshot child : snapshot.getChildren()){
                         row = new LinearLayout(getContext());
                         row.setOrientation(LinearLayout.HORIZONTAL);

@@ -3,6 +3,16 @@ package com.local.marchant.app.view;
 import android.os.Handler;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.local.marchant.app.firebase.DAOPlayer;
+import com.local.marchant.app.firebase.Player;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -13,10 +23,36 @@ public class SimonGame {
     private String username;
     private boolean status = true;
     private boolean turn = false;
+    private DAOPlayer daoPlayer;
 
     public SimonGame(CanvasView canvasView, String username){
         this.username = username;
         this.canvasView = canvasView;
+        daoPlayer = new DAOPlayer();
+
+        DatabaseReference dr = FirebaseDatabase.getInstance().getReference();
+
+        dr.child("Player").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    DataSnapshot player;
+                    for (DataSnapshot child : snapshot.getChildren()) {
+                        player = snapshot.child(child.getKey());
+
+                        if(player.child("user_name").getValue().toString().equals(username)){
+                            maxScore = Integer.parseInt(player.child("maxscore").getValue().toString());
+                            break;
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     public void play(){
@@ -77,7 +113,11 @@ public class SimonGame {
             userIndex++;
             score++;
 
-            if(score > maxScore) maxScore = score;
+            if(score > maxScore) {
+                maxScore = score;
+                Player player = new Player(username, maxScore);
+                daoPlayer.update(player);
+            }
             return true;
         }else{
             repeats.clear();
